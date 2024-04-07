@@ -38,7 +38,7 @@ def read_result_csv(filename: str) -> list:
         reader = csv.reader(csvfile)
         # 跳过标题行
         next(reader)
-        pattern = re.compile(r'(\d+)\s*ms')
+        pattern = re.compile(r'(\d+)\s*(ms)*')
         # 创建空列表用于存储处理后的数据
         ip_with_port_li = []
         # 遍历每一行数据
