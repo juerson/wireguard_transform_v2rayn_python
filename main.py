@@ -43,7 +43,7 @@ def read_result_csv(filename: str) -> list:
         ip_with_port_li = []
         # 遍历每一行数据
         for row in reader:
-            # 对倒数第一列字符串操作，使用正则表达式提取数字+ms格式的字符串
+            # 对倒数第一列字符串操作，使用正则表达式提取数字
             match = pattern.search(row[-1])
             # 如果找到匹配项
             if match:
