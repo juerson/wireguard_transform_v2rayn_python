@@ -101,14 +101,12 @@ def generate_random_ipv6_in_network(cidr: str, count=500) -> Union[list, Excepti
         return ValueError("Invalid CIDR notation")
 
 
-# 处理从ips-v4.txt文件中，读取到每行数据
+# 该函数用于处理从ips-v4.txt文件中读取的每行数据
 def processed_ip_address(address: str) -> list:
     """
     ipv4、ipv6地址，直接添加到ips中，
-    cidr的，先生成IP地址，然后添加到ips中，
     ip:port的地址，直接添加ips中。
-    param address: 传入的单个ipv4/ipv6/ipv4 cidr/ipv6 cidr/ip:port
-    return ips: 由多个地址组成的ips列表
+    cidr的，先生成IP地址，然后添加到ips中，
     """
     ips = []
     if is_ipv4_address(address):  # 判断是否为IPv4地址
@@ -130,7 +128,7 @@ def processed_ip_address(address: str) -> list:
 
 # 解析(提取)IPv4:PORT地址或IPv6:PORT地址
 def parse_ip_address_with_port(address: str) -> str:
-    # 注意：这两个正则只匹配格式，可能不适配其它程序，需要对ipv4、ipv6部分的字符串进行验证
+    # 注意：这两个正则只匹配格式，不适配其它程序，在其它程序中使用，还需要对IP部分的字符串进行ipv4、ipv6验证
     ipv4_with_port_pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})$'
     ipv6_with_port_pattern = r'^\[?([0-9a-fA-F:]+)\]?:\d{1,5}$'
     for pattern in [ipv4_with_port_pattern, ipv6_with_port_pattern]:
@@ -139,7 +137,7 @@ def parse_ip_address_with_port(address: str) -> str:
             return match.group(0)
 
 
-# 读取ips-v4.txt的内容到列表中
+# 读取ips-v4.txt的每行数据到列表中
 def read_ips_file(filename: str) -> list:
     if not os.path.exists(filename):
         return []
@@ -151,7 +149,7 @@ def read_ips_file(filename: str) -> list:
 def add_port(address: str, ports: list, random_count=54) -> list:
     select_random_ports = random.sample(ports, random_count)
     ip_with_port_li = []
-    # 已经是由端口的地址，就直接添加到ip_with_port_li中
+    # 带端口的地址，就直接添加到ip_with_port_li中
     if ('[' in address and ']' in address and ':' in address) or (address.count(':') == 1 and ':' in address):
         ip_with_port_li.append(address)
     else:
@@ -171,7 +169,7 @@ def splicing_wireguard_link(public_key: str, private_key: str, interface_address
     return wireguard_link
 
 
-# 将最后生成wireguard链接写入到txt文件中
+# 将最后生成的wireguard链接写入到txt文件中
 def write_to_output_file(filename: str, wireguard_list: list) -> None:
     with open(filename, mode='w', encoding='utf-8') as file:
         file.writelines([f"{item}\n" for item in wireguard_list])
@@ -227,7 +225,7 @@ if __name__ == '__main__':
                                                         private_key=PrivateKey, interface_address=Address,
                                                         interface_mtu=MTU, reserved=Reserved)
                     results.append(wireguard)
-    # 打印拼接成到wireguard链接
+    # 打印拼接成的wireguard链接
     for wireguard_link in results[:100]:
         print(wireguard_link)
     if len(results) > 100:
