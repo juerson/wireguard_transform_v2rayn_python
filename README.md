@@ -1,6 +1,6 @@
 
 
-以`WireGuard.conf`文件的参数为模板，`result.csv`或`ips-v4.txt`文件中的数据为数据来源，批量生成WireGuard链接，输出到output.txt文件中。程序中内置Cloudflare WARP的54个端口(UDP)，特别适合使用WARP对应的WireGuard配置文件生成WireGuard链接。
+以`WireGuard.conf`文件的参数为模板，`result.csv`或`ips-v4.txt`文件中的数据为数据来源，批量生成WireGuard链接，输出到`output.txt`文件中。程序中内置Cloudflare WARP的54个端口(UDP)，特别适合使用WARP对应的WireGuard配置文件生成WireGuard链接。
 
 ### 一、程序运行，转为WireGuard链接的大致示意图：
 
